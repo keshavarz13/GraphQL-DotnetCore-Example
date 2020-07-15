@@ -22,13 +22,12 @@ namespace GraphSchema
             );
 
             Func<IResolveFieldContext, string, object> func = (context, id) => data.GetDroidByIdAsync(id);
-
-            FieldDelegate<DroidType>(
+            Field<DroidType>(
                 "droid",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "id", Description = "id of the droid" }
                 ),
-                resolve: func
+                resolve: context => data.GetDroidByIdAsync(context.GetArgument<string>("id"))
             );
         }
     }
